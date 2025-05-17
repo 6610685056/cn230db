@@ -1,14 +1,76 @@
-# CN230 Project Template
+# CN230
 
-    python db.py
+## แนะนำตัว
+- ชื่อ: ชนม์ชนันทร์ จิตระวัง
 
+- สาขา: วิศวกรรมคอมพิวเตอร์
 
-1. fork this repository
-2. run codespaces
-3. when done execute the following git command
+- วิชา: CN230 Database Systems
 
-```
-    git add .
-    git commit -m "finished"
-    git push origin main
-```
+- ภาคการศึกษา:2/2567
+
+## ชื่อโครงงาน
+**การวิเคราะห์ข้อมูลสินค้าออนไลน์จาก FakeStore API ด้วย Python และ SQLite**
+
+---
+
+## วัตถุประสงค์โครงงาน
+
+- ศึกษากระบวนการดึงข้อมูลจาก API มาเก็บในฐานข้อมูล SQLite
+- วิเคราะห์ข้อมูลสินค้า เช่น จำนวน, ราคา, การขาย และการจัดเรตติ้ง
+- สร้างภาพกราฟเพื่อแสดงผลลัพธ์เชิงวิเคราะห์อย่างเป็นระบบ
+- พัฒนาทักษะการเขียนโปรแกรม Python โดยบูรณาการฐานข้อมูลและการวิเคราะห์ข้อมูล
+
+---
+
+## ลักษณะโครงงาน
+
+- ใช้ **FakeStore API** เป็นแหล่งข้อมูลจำลองสินค้า
+- พัฒนาเครื่องมือวิเคราะห์ด้วยภาษา Python
+- สร้างฐานข้อมูล SQLite เก็บข้อมูลสินค้า หมวดหมู่ และเรตติ้ง
+- วิเคราะห์ข้อมูลเชิงลึก (เช่น top products, category average)
+- แสดงผลด้วย **กราฟแท่ง / กราฟวงกลม / ตาราง**
+
+---
+
+## เทคโนโลยีที่ใช้
+
+- Python 3
+- [FakeStore API](https://fakestoreapi.com/)
+- SQLite3
+- `requests` สำหรับเรียกข้อมูล API
+- `matplotlib` สำหรับวาดกราฟ
+- `tabulate` สำหรับแสดงผลลัพธ์เป็นตาราง
+
+---
+
+## องค์ประกอบของโค้ด
+
+### 1. `fetch_data()`
+- ดึงข้อมูลสินค้าทั้งหมดจาก API
+- คืนค่าเป็น JSON ที่ประกอบด้วยข้อมูลสินค้า เช่น id, title, price, category, rating
+
+### 2. `create_database(conn)`
+- สร้างตาราง `categories`, `products`, และ `ratings` ในฐานข้อมูล SQLite
+- ลบตารางเดิมหากมี เพื่อเตรียมข้อมูลใหม่ทุกครั้งที่รัน
+
+### 3. `insert_data(conn, products)`
+- แยกหมวดหมู่สินค้าไปเก็บในตาราง `categories`
+- เก็บข้อมูลสินค้าและเรตติ้งใน `products` และ `ratings`
+- ใช้ foreign key เชื่อมโยงหมวดหมู่และสินค้า
+
+### 4. `analytics(conn)`
+วิเคราะห์ข้อมูลด้วย SQL และแสดงผลในหน้าจอ ได้แก่:
+
+#### 1. สินค้าต่อหมวดหมู่ + ราคาเฉลี่ย
+```sql
+SELECT cat.name, COUNT(p.id), AVG(p.price)
+
+---
+
+## วิธีใช้งาน
+
+1. ติดตั้งไลบรารีที่จำเป็น:
+
+```bash
+pip install requests matplotlib tabulate
